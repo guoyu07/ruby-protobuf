@@ -15,7 +15,16 @@ class ParseTest < Test::Unit::TestCase
 
   def test_double_require
     assert_nothing_raised(Protobuf::TagCollisionError) do
-      require "#{File.dirname(__FILE__)}/proto/addressbook_redefined.pb"
+      silence_warnings do
+        require "#{File.dirname(__FILE__)}/proto/addressbook_redefined.pb"
+      end
     end
+  end
+
+  def silence_warnings
+    old_verbose, $VERBOSE = $VERBOSE, nil
+    yield
+  ensure
+    $VERBOSE = old_verbose
   end
 end
