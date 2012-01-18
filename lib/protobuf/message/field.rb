@@ -309,7 +309,7 @@ module Protobuf
       end
 
       def acceptable?(val)
-        raise TypeError unless val.is_a?(String)
+        raise TypeError, "Expected String, got #{val.class}" unless val.is_a?(String)
         true
       end
 
